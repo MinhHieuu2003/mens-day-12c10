@@ -214,6 +214,17 @@
             padding: 30px;
         }
 
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            background: transparent;
+        }
+
         @keyframes fadeInDown {
             from {
                 opacity: 0;
@@ -252,6 +263,7 @@
     </style>
 </head>
 <body>
+    <canvas id="fireworks"></canvas>
     <div class="stars" id="stars"></div>
 
     <div class="container">
@@ -349,6 +361,139 @@
 
         createStars();
         createEmojiRain();
+
+        // Pháo hoa
+        const canvas = document.getElementById('fireworks');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.velocity = {
+                    x: (Math.random() - 0.5) * 8,
+                    y: (Math.random() - 0.5) * 8
+                };
+                this.alpha = 1;
+                this.decay = Math.random() * 0.015 + 0.015;
+                this.gravity = 0.08;
+                this.size = Math.random() * 3 + 2;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.restore();
+            }
+
+            update() {
+                this.velocity.y += this.gravity;
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+                this.alpha -= this.decay;
+            }
+        }
+
+        class Firework {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.targetY = Math.random() * canvas.height * 0.4 + 50;
+                this.velocity = -8;
+                this.exploded = false;
+                this.particles = [];
+                this.colors = [
+                    '#FFD700', '#FFA500', '#FF69B4', '#00FFFF', 
+                    '#FF1493', '#00FF00', '#FF4500', '#9370DB'
+                ];
+            }
+
+            draw() {
+                if (!this.exploded) {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, 4, 0, Math.PI * 2);
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = '#FFFFFF';
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                } else {
+                    this.particles.forEach(particle => particle.draw());
+                }
+            }
+
+            update() {
+                if (!this.exploded) {
+                    this.y += this.velocity;
+                    if (this.y <= this.targetY) {
+                        this.explode();
+                    }
+                } else {
+                    this.particles.forEach((particle, index) => {
+                        particle.update();
+                        if (particle.alpha <= 0) {
+                            this.particles.splice(index, 1);
+                        }
+                    });
+                }
+            }
+
+            explode() {
+                this.exploded = true;
+                const particleCount = Math.random() * 50 + 80;
+                const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+                
+                for (let i = 0; i < particleCount; i++) {
+                    this.particles.push(new Particle(this.x, this.y, color));
+                }
+            }
+        }
+
+        const fireworks = [];
+
+        function createFirework() {
+            const x = Math.random() * canvas.width;
+            fireworks.push(new Firework(x, canvas.height));
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            fireworks.forEach((firework, index) => {
+                firework.update();
+                firework.draw();
+                
+                if (firework.exploded && firework.particles.length === 0) {
+                    fireworks.splice(index, 1);
+                }
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        // Bắn pháo hoa liên tục với tần suất cao hơn
+        setInterval(createFirework, 600);
+        
+        // Bắn 10 phát pháo hoa ban đầu để trang thêm hoành tráng
+        for (let i = 0; i < 10; i++) {
+            setTimeout(createFirework, i * 150);
+        }
+
+        animate();
     </script>
 </body>
 </html>
