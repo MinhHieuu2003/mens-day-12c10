@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng Ngày Quốc Tế Nam Giới 19/11</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .date-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 12px 30px;
+            border-radius: 50px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        h1 {
+            color: white;
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .class-name {
+            color: #ffd700;
+            font-size: 42px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 22px;
+            font-weight: 300;
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            animation: fadeInUp 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .card h3 {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .message-box {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 50px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: fadeIn 1.2s ease-out;
+            margin-bottom: 40px;
+        }
+
+        .message-box h2 {
+            color: #ffd700;
+            font-size: 36px;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .message-box p {
+            color: white;
+            font-size: 20px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .emoji-rain {
+            position: fixed;
+            font-size: 30px;
+            animation: fall linear infinite;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            padding: 30px;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 36px; }
+            .class-name { font-size: 32px; }
+            .subtitle { font-size: 18px; }
+            .message-box { padding: 30px; }
+            .message-box h2 { font-size: 28px; }
+            .message-box p { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <div class="header">
+            <div class="date-badge">🗓️ 19 THÁNG 11</div>
+            <h1>CHÚC MỪNG</h1>
+            <div class="class-name">CÁC BẠN NAM 12C10</div>
+            <p class="subtitle">Ngày Quốc Tế Nam Giới 2024</p>
+        </div>
+
+        <div class="cards-container">
+            <div class="card" style="animation-delay: 0.1s">
+                <span class="card-icon">💪</span>
+                <h3>Mạnh Mẽ & Dũng Cảm</h3>
+                <p>Chúc các bạn luôn giữ vững tinh thần mạnh mẽ, vượt qua mọi thử thách trong cuộc sống và học tập!</p>
+            </div>
+
+            <div class="card" style="animation-delay: 0.2s">
+                <span class="card-icon">🎯</span>
+                <h3>Thành Công Rực Rỡ</h3>
+                <p>Chúc các bạn đạt được những mục tiêu đề ra, thi đại học thành công và có tương lai tươi sáng!</p>
+            </div>
+
+            <div class="card" style="animation-delay: 0.3s">
+                <span class="card-icon">🌟</span>
+                <h3>Tỏa Sáng & Nổi Bật</h3>
+                <p>Mỗi người đều có những điểm mạnh riêng. Hãy tự tin tỏa sáng và thể hiện bản thân mình!</p>
+            </div>
+
+            <div class="card" style="animation-delay: 0.4s">
+                <span class="card-icon">❤️</span>
+                <h3>Hạnh Phúc & Yêu Thương</h3>
+                <p>Chúc các bạn luôn được gia đình yêu thương, bạn bè tin cậy và có những kỷ niệm đẹp bên lớp 12C10!</p>
+            </div>
+
+            <div class="card" style="animation-delay: 0.5s">
+                <span class="card-icon">🏆</span>
+                <h3>Chinh Phục Đỉnh Cao</h3>
+                <p>Năm học cuối cấp sẽ là bước đệm vững chắc cho tương lai. Hãy nỗ lực hết mình các bạn nhé!</p>
+            </div>
+
+            <div class="card" style="animation-delay: 0.6s">
+                <span class="card-icon">🤝</span>
+                <h3>Tình Bạn Bền Chặt</h3>
+                <p>Cảm ơn các bạn đã tạo nên một lớp 12C10 đoàn kết, vui vẻ và đầy năng lượng tích cực!</p>
+            </div>
+        </div>
+
+        <div class="message-box">
+            <h2>🎉 LỌI CHÚC ĐẶC BIỆT 🎉</h2>
+            <p>Chúc các chàng trai lớp 12C10 luôn khỏe mạnh, tự tin và thành công!</p>
+            <p>Các bạn là niềm tự hào của lớp, là những người bạn tuyệt vời!</p>
+            <p>Hãy luôn giữ vững tinh thần lạc quan, nhiệt huyết và không ngừng phấn đấu!</p>
+            <p style="margin-top: 25px; font-size: 24px; color: #ffd700; font-weight: 600;">
+                Happy International Men's Day! 🎊
+            </p>
+        </div>
+
+        <div class="footer">
+            <p>💙 Gửi đến các bạn nam 12C10 với tất cả tình cảm 💙</p>
+            <p style="margin-top: 10px; font-style: italic;">19/11/2024 - Ngày Quốc Tế Nam Giới</p>
+        </div>
+    </div>
+
+    <script>
+        // Tạo hiệu ứng sao
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Tạo hiệu ứng emoji rơi
+        function createEmojiRain() {
+            const emojis = ['💙', '⭐', '🎉', '🏆', '💪', '🎯'];
+            setInterval(() => {
+                const emoji = document.createElement('div');
+                emoji.className = 'emoji-rain';
+                emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.style.left = Math.random() * 100 + '%';
+                emoji.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                document.body.appendChild(emoji);
+                
+                setTimeout(() => {
+                    emoji.remove();
+                }, 6000);
+            }, 500);
+        }
+
+        createStars();
+        createEmojiRain();
+    </script>
+</body>
+</html>
